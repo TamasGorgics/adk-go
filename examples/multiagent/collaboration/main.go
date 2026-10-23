@@ -36,13 +36,14 @@ import (
 	"os"
 	"strings"
 
+	"github.com/openai/openai-go/v3"
 	"google.golang.org/genai"
 
 	"google.golang.org/adk/v2/agent"
 	"google.golang.org/adk/v2/agent/llmagent"
 	"google.golang.org/adk/v2/cmd/launcher"
 	"google.golang.org/adk/v2/cmd/launcher/full"
-	"google.golang.org/adk/v2/model/gemini"
+	"google.golang.org/adk/v2/model/openaimodel"
 	"google.golang.org/adk/v2/tool"
 	"google.golang.org/adk/v2/tool/functiontool"
 )
@@ -216,8 +217,8 @@ func bookFlight(_ agent.Context, in BookFlightInput) (BookFlightOutput, error) {
 func main() {
 	ctx := context.Background()
 
-	model, err := gemini.NewModel(ctx, "gemini-3.1-flash-lite", &genai.ClientConfig{
-		APIKey: os.Getenv("GOOGLE_API_KEY"),
+	model, err := openaimodel.NewModel(ctx, openai.ChatModelGPT6Luna, &openaimodel.ClientConfig{
+		APIKey: os.Getenv("OPENAI_API_KEY"),
 	})
 	if err != nil {
 		log.Fatalf("Failed to create model: %v", err)
